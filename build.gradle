@@ -1,0 +1,87 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'maven'
+    id 'signing'
+    id 'org.javamodularity.moduleplugin' version '1.6.0'
+    id 'io.codearte.nexus-staging' version '0.21.2'
+}
+
+targetCompatibility = sourceCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 11
+
+group 'com.wexalian.nullability'
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: deployRepoUsername, password: deployRepoPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: deployRepoUsername, password: deployRepoPassword)
+            }
+
+            pom.project {
+                name = 'nullability'
+                packaging = 'jar'
+                description = '2 basic Nonnull and Nullable annotations from jsr305, compatible with Java 9+'
+
+                licenses {
+                    license {
+                        name = 'The Unlicense'
+                        url = 'https://unlicense.org/'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'Wexalian'
+                        name = 'Lars Gerrits'
+                        email = 'larsgerrits99@gmail.com'
+//                        organization = 'wexalian'
+//                        organizationUrl = 'http://www.wexalian.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/Wexalian/nullability.git'
+                    developerConnection = 'scm:git:ssh://github.com/Wexalian/nullability.git'
+                    url = 'http://www.github.com/Wexalian/nullability'
+                }
+            }
+        }
+    }
+}
