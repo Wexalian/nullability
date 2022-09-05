@@ -14,8 +14,8 @@ plugins {
 
 targetCompatibility = sourceCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 11
 
-group 'com.wexalian.nullability'
-version = '0.0.1'
+group = 'com.wexalian.nullability'
+version = '0.0.2'
 
 repositories {
     mavenCentral()
@@ -48,18 +48,19 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+            repository(url: deployRepoUrl) {
                 authentication(userName: deployRepoUsername, password: deployRepoPassword)
             }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+            snapshotRepository(url: deployRepoUrlSnapshot) {
                 authentication(userName: deployRepoUsername, password: deployRepoPassword)
             }
 
             pom.project {
                 name = 'nullability'
                 packaging = 'jar'
-                description = '2 basic Nonnull and Nullable annotations from jsr305, compatible with Java 9+'
+                description = 'Nullability annotations and utilities'
+                url = 'https://www.github.com/Wexalian/nullability'
 
                 licenses {
                     license {
@@ -79,7 +80,7 @@ uploadArchives {
                 scm {
                     connection = 'scm:git:git://github.com/Wexalian/nullability.git'
                     developerConnection = 'scm:git:ssh://github.com/Wexalian/nullability.git'
-                    url = 'http://www.github.com/Wexalian/nullability'
+                    url = 'https://www.github.com/Wexalian/nullability'
                 }
             }
         }
