@@ -64,39 +64,6 @@ publishing { //todo see if possible to publish annotations separately
                 }
             }
         }
-
-        mavenJavaAnnotations(MavenPublication) {
-            artifactId = 'nullability'
-            from components.java
-
-            pom {
-                name = 'nullability'
-                packaging = 'jar'
-                description = 'Nullability annotations and utilities'
-                url = 'https://www.github.com/Wexalian/nullability'
-
-                licenses {
-                    license {
-                        name = 'The Unlicense'
-                        url = 'https://unlicense.org/'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'Wexalian'
-                        name = 'Lars Gerrits'
-                        email = 'larsgerrits99@gmail.com'
-//                        organization = 'wexalian'
-//                        organizationUrl = 'http://www.wexalian.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/Wexalian/nullability.git'
-                    developerConnection = 'scm:git:ssh://github.com/Wexalian/nullability.git'
-                    url = 'https://www.github.com/Wexalian/nullability'
-                }
-            }
-        }
     }
 }
 
